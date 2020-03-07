@@ -1,11 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/post");
 const DB_CONNECTION_STRING = require("./config/keys").mongoURI;
 
 const app = express();
+
+//middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // mongodb connection
 mongoose
@@ -21,7 +26,6 @@ mongoose
 app.use("/api/users", users);
 app.use("/api/posts", posts);
 app.use("/api/profile", profile);
-
 
 app.get("/", (req, res) => {
   res.send("Heyya");
